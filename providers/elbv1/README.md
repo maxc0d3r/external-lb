@@ -11,7 +11,7 @@ This provider keeps pre-existing Classic Load Balancers updated with the EC2 ins
 
 1. Deploy the stack for this provider from the Rancher Catalog
 2. Using the AWS Console create a Classic ELB load balancer with one or more listeners and configure it according to your applications requirements. Configure the listener(s) with an "instance protocol" matching that of your application as well as the "instance port" that your Rancher service will expose to the hosts.
-3. Create or update your service to expose one or multiple host ports that match the configuration of your ELB listener(s). Then add the service label `io.rancher.service.external_lb.endpoint` using as value the name of the previously created ELB load balancer.
+3. Create or update your service to expose one or multiple host ports that match the configuration of your ELB listener(s). Then add the service label `io.rancher.service.external_lb.endpoint` using as value the name of the previously created ELB load balancer. You can provide multiple names separated by comma (",") in case you want different ELBs route traffic to the same service.
 
 Environment Variables
 ==========
@@ -28,38 +28,10 @@ The following environment variables are used to configure global options for thi
 
 Note: Instead of specifying AWS credentials when deploying the stack you can create an IAM policy and role and associate it with your EC2 instances.
 
-Required AWS IAM permissions
+Example IAM policy with the minimum required permissions
 ==========
 
-The following IAM policy describes the minimum set of permissions needed for the AWS ELBv1 implentation to work.
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "ec2:DescribeInstances"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    },
-    {
-      "Action": [
-        "elasticloadbalancing:AddTags",
-        "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
-        "elasticloadbalancing:DescribeInstanceHealth",
-        "elasticloadbalancing:DescribeLoadBalancers",
-        "elasticloadbalancing:DescribeTags",
-        "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
-        "elasticloadbalancing:RemoveTags"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
-}
-```
+TODO
 
 License
 =======
