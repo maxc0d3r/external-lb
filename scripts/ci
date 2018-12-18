@@ -3,7 +3,11 @@ set -e
 
 cd $(dirname $0)
 
+echo "Running build..."
 ./build
+echo "Running tests..."
 ./test
-./validate
+#echo "Running validation checks..."
+#./validate
+echo "Running package build..."
 ./package

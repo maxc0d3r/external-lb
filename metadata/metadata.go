@@ -86,13 +86,6 @@ func (m *MetadataClient) GetMetadataLBConfigs(targetPoolSuffix string) (map[stri
 			}
 
 			logrus.Debugf("LB label exists for service : %v", service.Name)
-			// Configure this service only if this endpoint is already not used by some other service so far
-			_, ok = lbConfigs[endpoint]
-			if ok {
-				logrus.Errorf("Endpoint %s already used by another service, will skip this service : %s",
-					endpoint, service.Name)
-				continue
-			}
 
 			// get the service port
 			if len(service.Ports) == 0 {
